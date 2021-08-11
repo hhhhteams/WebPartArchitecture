@@ -1,0 +1,272 @@
+﻿<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/WebPartArchitecture/WebPartProfile.js"></script>
+<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/Templates/CommentMailComponent.js"></script>
+<style>
+    #pageTitle a {
+        display: none !important;
+    }
+
+    #contentRow {
+        padding-top: 0px !important;
+        margin-top: -15px;
+    }
+
+    #CreateTasks .subcategoryTasks .subcategoryTask {
+        width: 14%;
+        margin: 25px 7px;
+    }
+</style>
+<div ng-controller="WebpartProfileController" ng-cloak>
+    <div class="col-lg-12 pad0">
+        <div class="col-sm-9 left-col">
+            <div class="row">
+                <div class="col-sm-12 col-sm-12 padL-0 PadR0">
+                    <div class="task-title mb-10" style="vertical-align:top">
+                        <h1>
+                            {{SPComponentsData.Title}}
+                            <!--<img class="icon-sites-img"
+                                 ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/Service_Icons/NewItemIcon-green.png" />-->
+                            <a ng-if="isMemberOwner==true" target="_blank" class="hreflink" ng-href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/sp/SitePages/WebpartArchitecture.aspx?WebpartId={{SPComponentsData.Id}}">
+                                <img src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/32/edititem.gif">
+                            </a>
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-lg-12 pad0">
+                    <div class="col-lg-12 left-col">
+                        <div class="row">
+                            <div class="col-sm-12 padL-0 PadR0">
+                                <div class="involve_actor">
+                                    <div class="tmvalue" title="WebPart Id">
+                                        <label class="full_width">WebPart Id</label>
+                                    </div>
+                                    <div class="tlvalue impact-infoII ">
+                                        {{SPComponentsData.WebpartId}}
+                                    </div>
+                                    <div class="tmvalue" title="Webpart Type">
+                                        <label class="full_width">Webpart Type</label>
+                                    </div>
+                                    <div class="tlvalue impact-infoII ">
+                                        {{SPComponentsData.WebpartType}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 padL-0 PadR0">
+                                <div class="involve_actor">
+                                    <div class="tmvalue" title="Site">
+                                        <label class="full_width">Site</label>
+                                    </div>
+                                    <div class="tlvalue impact-infoII ">
+                                        {{Site}}
+                                    </div>
+                                    <div class="tmvalue" title="Base Template">
+                                        <label class="full_width">Base Template</label>
+                                    </div>
+                                    <div class="tlvalue impact-infoII ">
+                                        <div ng-show="BaseTemplate.length>0" class="col-sm-6 padL-0 PadR0" title="BaseTemplate">
+                                            <div class="row">
+                                                <div class="col-sm-12 PadR0">
+                                                    <div class="block" ng-repeat="item in BaseTemplate track by $index">
+                                                        <a class="hreflink" target="_blank"
+                                                           ng-href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/sp/SitePages/Portfolio-Profile.aspx?taskId={{item.Id}}">{{item.Title}}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 padL-0 PadR0">
+                                <div class="involve_actor">
+                                    <div class="tmvalue" title="Page Name">
+                                        <label class="full_width">Page Name</label>
+                                    </div>
+                                    <div class="tlvalue impact-infoII ">
+                                        {{SPComponentsData.PageName}}
+                                    </div>
+                                    <div class="tmvalue" title="Status">
+                                        <label class="full_width">Status</label>
+                                    </div>
+                                    <div class="tlvalue impact-infoII ">
+                                        {{SPComponentsData.Status}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!--start expand collapse code-->
+                <div class="col-sm-12 padL-0 PadR0 mt-10">
+                    <div class="row ml-0 mr-0">
+                        <div class="{{attachments.length==0?'col-sm-12 PadR0 padL-0':'col-sm-12 padL-0 PadR0'}} involve_actor">
+                            <div class="col-sm-4 PadL0" ng-if="attachments.length >0">
+                                <div class=" no-padding" ng-repeat="attachedFiles in attachments">
+                                    <div class="mt-10"
+                                         ng-if="attachedFiles.FileName.toLowerCase().indexOf('.png'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.jpg'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.bmp'.toLowerCase())> -1">
+
+                                        <div class="img" id="sit-sharewebImagePopup-demo">
+                                            <a ng-if="deleteAttachedFile = true" class="sit-preview" target="_blank"
+                                               href="{{newURL}}/Lists/{{site}}/Attachments/{{attachedItemId}}/{{attachedFiles.FileName}}">
+                                                <img alt="{{attachedFiles.FileName}}" style="width:398px;"
+                                                     ng-src="{{newURL}}/Lists/{{site}}/Attachments/{{attachedItemId}}/{{attachedFiles.FileName}}"
+                                                     data-preview-url="{{newURL}}/Lists/{{site}}/Attachments/{{attachedItemId}}/{{attachedFiles.FileName}}">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div ng-if="attachedFiles.FileName.toLowerCase().indexOf('.txt'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.docx'.toLowerCase())> -1  || attachedFiles.FileName.toLowerCase().indexOf('.pdf'.toLowerCase())> -1  || attachedFiles.FileName.toLowerCase().indexOf('.doc'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.msg'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.pptx'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.xls'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.xlsx'.toLowerCase())> -1">
+                                        <a ng-href="{{newURL}}/Lists/{{site}}/Attachments/{{attachedItemId}}/{{attachedFiles.FileName}}">
+                                            {{$index+1}}.
+                                            {{attachedFiles.FileName}}
+                                        </a>
+                                    </div>  
+                                    <div class="mt-2 font11 pull-right"
+                                         ng-show="attachedFiles.FileName==imageInfo.ImageName"
+                                         ng-repeat="imageInfo in BasicImageInfo">
+                                        <span>{{imageInfo.UploadeDate}}</span>
+                                        By <span>{{imageInfo.UserName}}</span>                                      
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="{{attachments.length==0?'col-sm-12 padL-0 PadR0 no-padding':'col-sm-12 padL-0 PadR0'}} mt-10">
+                                <div ng-show="DataSource.length!=0" class="col-sm-12 padL-0 PadR0 dashboard-sm-12">
+                                    <div class="panel panel-primary-head blocks" style=" box-shadow: none;
+                            transition: none;" id="t_draggable1">
+                                        <div class="panel-heading profileboxclr" style="  background-color: #f5f5f5;
+                                border-color: #ddd; padding: 7px;">
+                                            <h3 class="panel-title" style="text-align: inherit;">
+                                                <label for="identifier-3" class="lbltitleclr">Data Source</label>
+                                                <span class="pull-left">
+                                                    <span ng-if="!expand_collapseDataSource"
+                                                          style="cursor:pointer;" ng-click="filterExpandDataSource(false)">
+                                                        <img style="width:10px;"
+                                                             ng-src="{{newURL}}/SiteCollectionImages/ICONS/24/right-list-icon.png">
+                                                    </span>
+                                                    <span ng-if="expand_collapseDataSource"
+                                                          style="cursor:pointer; " ng-click="filterExpandDataSource(true)">
+                                                        <img style="width:10px;"
+                                                             ng-src="{{newURL}}/SiteCollectionImages/ICONS/24/list-icon.png">
+                                                    </span>
+                                                </span>
+                                            </h3>
+
+                                        </div>
+                                        <div style="{{expand_collapseDataSource?'display:inline;':'display:none;'}}">
+                                            <div class="boxbdrdesign" id="testDiv1">
+                                                <div>
+                                                    <ul class="table table-hover">
+                                                        <li class="for-lis">
+                                                            <div style="width:2%;">
+                                                            </div>
+                                                            <div style="width:32%;" class="padLR">
+                                                                <label style="margin-left: 29px;">Name</label>
+                                                            </div>
+                                                            <div style="width:16%;" class="padLR">
+                                                            </div>
+                                                            <div style="width:33%;" class="padLR">
+                                                                <label>Site</label>
+                                                            </div>
+                                                        </li>
+                                                        <li ng-repeat="item in DataSource | orderBy:orderBy1:revers"
+                                                            class="for-lis {{item.expanded?'project_active tdrows':'tdrows'}}">
+                                                            <div style="width:2%;">
+                                                            </div>
+                                                            <div style="width:32%;" class="padLR">
+                                                                <img style="width:22px;">  {{item.Name}}
+                                                            </div>
+                                                            <div style="width:16%;" class="padLR">
+                                                            </div>
+                                                            <div style="width:33%;" class="padLR">
+                                                                {{item.Site}}
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ms-clear"></div>
+                    </div>                    
+                    <div ng-show="smartFeaturesAvailable.length!=0" class="col-sm-12  mt-10 padL-0 PadR0 dashboard-sm-12">
+                        <div class="panel panel-primary-head blocks" style=" box-shadow: none;
+                            transition: none;" id="t_draggable1">
+                            <div class="panel-heading profileboxclr" style="  background-color: #f5f5f5;
+                                border-color: #ddd; padding: 7px;">
+                                <h3 class="panel-title" style="text-align: inherit;">
+                                    <label for="identifier-3" class="lbltitleclr">Features</label>
+                                    <span class="pull-left">
+                                        <span ng-if="!expand_collapseSmartFeature"
+                                              style="cursor:pointer;" ng-click="filterExpandSmartFeature(false)">
+                                            <img style="width:10px;"
+                                                 ng-src="{{newURL}}/SiteCollectionImages/ICONS/24/right-list-icon.png">
+                                        </span>
+                                        <span ng-if="expand_collapseSmartFeature"
+                                              style="cursor:pointer; " ng-click="filterExpandSmartFeature(true)">
+                                            <img style="width:10px;"
+                                                 ng-src="{{newURL}}/SiteCollectionImages/ICONS/24/list-icon.png">
+                                        </span>
+                                    </span>
+                                </h3>
+
+                            </div>
+                            <div style="{{expand_collapseSmartFeature?'display:inline;':'display:none;'}}">
+                                <div class="boxbdrdesign" id="testDiv1">
+                                    <div>
+                                        <ul class="table table-hover">
+                                            <li class="for-lis">
+                                                <div style="width:2%;">
+                                                </div>
+                                                <div style="width:32%;" class="padLR">
+                                                    <label>Title</label>
+                                                </div>
+                                                <div style="width:16%;" class="padLR">
+                                                </div>
+                                                <div style="width:33%;" class="padLR">
+                                                </div>
+                                            </li>
+                                            <li ng-repeat="item in smartFeaturesAvailable | orderBy:orderBy1:revers"
+                                                class="for-lis  {{item.expanded?'project_active tdrows':'tdrows'}}">
+                                                <div style="width:2%;">
+                                                </div>
+                                                <div style="width:32%;" class="padLR">
+                                                    <div class="col-sm-12 PadR0 block">
+                                                        <a class="hreflink" target="_blank"
+                                                           ng-href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/sp/SitePages/Portfolio-Profile.aspx?taskId={{item.Id}}">{{item.Title}}</a>
+                                                    </div>
+                                                </div>
+                                                <div style="width:16%;" class="padLR">
+                                                </div>
+                                                <div style="width:33%;" class="padLR">
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="SPComponentsData.Body!=undefined && SPComponentsData.Body!='' "
+                         class="col-sm-12 mt-10 padL-0 PadR0 dashboard-sm-12">
+                        <div class="panel panel-primary-head blocks" style=" box-shadow: none;
+                            transition: none;" id="t_draggable1">
+                            <div>
+                                <div class="boxbdrdesign" id="testDiv1">
+                                    <!--<div>{{Task.Body}}</div>-->
+                                    <span ng-bind-html="SPComponentsData.Body | trustedHTML"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-------------------------end------------------->
+            </div>
+        </div>
+        <div class="col-sm-3 padL-25 mt-25">
+            <!--commentComponent-->
+            <Comments-Mail siteType="'SPComponents'" textid="'webpartprofiletxtid'" editid="'webpartprofileid'"
+                           autoid="'webpartprofile'" id="SPComponentsData.Id" webpartid="'CommentMailComponent'"></Comments-Mail>
+        </div>
+    </div>
+</div>

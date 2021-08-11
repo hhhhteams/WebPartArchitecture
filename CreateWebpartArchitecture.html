@@ -1,0 +1,679 @@
+﻿<script src="https://static.sharepointonline.com/bld/_layouts/15/16.0.8929.1228/sp.requestexecutor.js"></script>
+<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/Services/alasql.min.js"></script>
+<script src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/WebPartArchitecture/CreateWebpartArchitecture.js"></script>
+<script type="text/javascript" src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/Services/froala_editor.pkgd.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/Services/froala_style.min.css" />
+<link rel="stylesheet" type="text/css" href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/Style%20Library/js/angular/Services/froala_editor.pkgd.min.css" />
+<style>
+    #pageTitle a {
+        display: none !important;
+    }
+    #BaseTemplatepopup .mailicons{margin-left: -54px;margin-top: -4px;}
+    #DescriptionBodyForArchitecture.fr-box.fr-basic.fr-top{z-index: 999!important;}
+    #DescriptionBodyForArchitecture .fr-toolbar.fr-desktop.fr-top.fr-basic{z-index: 999!important;}
+    #contentRow {
+        padding-top: 0px !important;
+        margin-top: -15px;
+    }
+</style>
+<div ng-controller="CreateWebpartArchitectureController" ng-cloak>
+    <div>
+        <h1 class="blue-clr">CreateWebpartArchitecture </h1>
+        <a ng-show="WebPartItemId!=undefined" target="_blank" class="blue-clr pull-right hreflink" style="cursor:pointer;" title="WebPart Profile Page"
+           data-toggle="modal" ng-href="https://hhhhteams.sharepoint.com/sites/HHHHTeams/sp/SitePages/Webpart-Profile.aspx?ItemId={{WebPartItemId}}">
+            Go To Profile Page
+        </a>
+    </div>
+    <div class="clearfix"> </div>
+    <div class="panel panel-default">
+        <div class="tabBox clearfix">
+            <div class="tab-pane">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-sm-12">
+                            <div class="col-sm-7 mb-10 padL-0 PadR0" title="Task Name">
+                                <label>Title</label>
+                                <input type="text" class="form-control" placeholder="Title" ng-required="true" ng-model="WebpartTitle" />
+                            </div>
+                            <div class="col-sm-3 mb-10 Doc-align PadR0">
+                                <div class="col-sm-12 padL-0">
+                                    <label class="full_width"> Webpart Id</label>
+                                    <input type="text" class="form-control" placeholder="WebpartId" ng-required="true" ng-model="WebpartIdDetails" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2 PadR0">
+                                <label>Webpart Type </label>
+                                <div ng-repeat="item in WebpartTypeChoiceData" style="margin-bottom:2px">
+                                    <input type="radio" name="WebpartType" id="{{item}}" value="{{item}}" class="form-check-input" ng-click="addWebpartType(item)" ng-model="WebpartTypeDetails" style="margin-right:5px" />{{item}}
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-sm-12">
+
+                            <div class="col-sm-7 mb-10 padL-0 PadR0 mt-10">
+                                <label>Page Name</label>
+
+
+                                <input type="text" class="form-control" placeholder="Page Name" style="width:100%;" ng-model="PageNameDetails" />
+
+
+
+                            </div>
+
+                            <div class="col-sm-3 mt-10">
+                                <label class="full_width">Site</label>
+                                <select class="form-control" id="SitesName" ng-model="SiteDetails">
+                                    <option value="">Select Site</option>
+                                    <option ng-repeat="item in RelatedToSites" value="{{item.Title}}">
+                                        {{item.Title}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2 PadR0 mt-10">
+                                <div class="col-sm-12 mb-10 Doc-align padL-0">
+                                    <div class="col-sm-11 PadR0 padL-0">
+                                        <label>
+                                            BaseTemplate
+                                        </label>
+                                        <input ng-hide="smartBaseTemplates.length>0" type="text" class="form-control ui-autocomplete-input" id="txtBaseTemplate" ng-model="SearchBaseTemplate" autocomplete="off"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                                    </div>
+                                    <div class="col-sm-1 no-padding" ng-hide="smartBaseTemplates.length>0">
+                                        <label class="full_width">&nbsp;</label>
+                                        <img ng-src="/sites/HHHHTeams/SiteCollectionImages/ICONS/32/edititem.gif" ng-click="openBaseTemplatePopup('BaseTemplate')">
+                                    </div>
+                                    <div class="row" ng-show="smartBaseTemplates.length>0">
+                                        <div class="col-sm-11 padL-0 PadR0">
+                                            <div class="col-sm-12 PadR0">
+                                                <div class="block" ng-repeat="item in smartBaseTemplates track by $index">
+                                                    <a class="hreflink" target="_blank" ng-href="{{Baseurl}}/SitePages/Portfolio-Profile.aspx?taskId={{item.Id}}"> {{item.Title}}</a>
+                                                    <a class="hreflink" ng-click="smartBaseTemplates.splice($index,1)">
+                                                        <img ng-src="/_layouts/images/delete.gif">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1 no-padding">
+                                            <!--<label class="full_width">&nbsp;</label>-->
+                                            <img ng-src="/sites/HHHHTeams/SiteCollectionImages/ICONS/32/edititem.gif" ng-click="openBaseTemplatePopup('BaseTemplate')">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="col-sm-12">
+
+                            <div class="col-sm-7 mb-10 padL-0 PadR0 mt-10">
+                                <label>Page Url</label>
+
+
+                                <input type="text" class="form-control" placeholder="Page Url" style="width:100%;" ng-model="PageURLDetails" />
+
+
+
+                            </div>
+
+                            <!--<div class="col-sm-3 mt-10">
+        <label class="full_width">Site</label>
+        <select class="form-control" id="SitesName" ng-model="SiteDetails">
+            <option value="">Select Site</option>
+            <option ng-repeat="item in RelatedToSites" value="{{item.Title}}">
+                {{item.Title}}
+            </option>
+        </select>
+    </div>-->
+                            <div class="col-sm-3 PadR0 mt-10">
+                                <div class="col-sm-12 mb-10 padL-0">
+                                    <div class="col-sm-11 PadR0 padL-0">
+                                        <label>
+                                            Component
+                                        </label>
+                                        <input ng-hide="ComponentsItems.length>0" type="text" class="form-control ui-autocomplete-input" id="txtComponentsItems" ng-model="SearchComponentsItems" autocomplete="off"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                                    </div>
+                                    <div class="col-sm-1 no-padding" ng-hide="ComponentsItems.length>0">
+                                        <label class="full_width">&nbsp;</label>
+                                        <img ng-src="/sites/HHHHTeams/SiteCollectionImages/ICONS/32/edititem.gif" ng-click="openTaggedItemPopup('Components')">
+                                    </div>
+                                    <div class="row" ng-show="ComponentsItems.length>0">
+                                        <div class="col-sm-11 padL-0 PadR0">
+                                            <div class="col-sm-12 PadR0">
+                                                <div class="block" ng-repeat="item in ComponentsItems track by $index">
+                                                    <a class="hreflink" target="_blank" ng-href="{{Baseurl}}/SitePages/Portfolio-Profile.aspx?taskId={{item.Id}}"> {{item.Title}}</a>
+                                                    <a class="hreflink" ng-click="ComponentsItems.splice($index,1)">
+                                                        <img ng-src="/_layouts/images/delete.gif">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1 no-padding">
+                                            <!--<label class="full_width">&nbsp;</label>-->
+                                            <img ng-src="/sites/HHHHTeams/SiteCollectionImages/ICONS/32/edititem.gif" ng-click="openTaggedItemPopup('Components')">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 PadR0 mt-10">
+                                <div class="col-sm-12 mb-10 padL-0 PadR0">
+                                    <div class="col-sm-11 PadR0 padL-0">
+                                        <label>
+                                            Service
+                                        </label>
+                                        <input ng-hide="ServiceItems.length>0" type="text" class="form-control ui-autocomplete-input" id="txtServiceItems" ng-model="SearchServiceItems" autocomplete="off"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                                    </div>
+                                    <div class="col-sm-1 no-padding" ng-hide="ServiceItems.length>0">
+                                        <label class="full_width">&nbsp;</label>
+                                        <img ng-src="/sites/HHHHTeams/SiteCollectionImages/ICONS/32/edititem.gif" ng-click="openTaggedItemPopup('Services')">
+                                    </div>
+                                    <div class="row" ng-show="ServiceItems.length>0">
+                                        <div class="col-sm-11 padL-0 PadR0">
+                                            <div class="col-sm-12 PadR0">
+                                                <div class="block" ng-repeat="item in ServiceItems track by $index">
+                                                    <a class="hreflink" target="_blank" ng-href="{{Baseurl}}/SitePages/Portfolio-Profile.aspx?taskId={{item.Id}}"> {{item.Title}}</a>
+                                                    <a class="hreflink" ng-click="ServiceItems.splice($index,1)">
+                                                        <img ng-src="/_layouts/images/delete.gif">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1 no-padding">
+                                            <!--<label class="full_width">&nbsp;</label>-->
+                                            <img ng-src="/sites/HHHHTeams/SiteCollectionImages/ICONS/32/edititem.gif" ng-click="openTaggedItemPopup('Services')">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="col-sm-9 padL-0">
+                                <label> Data Sources</label>
+                                <div class="col-sm-12 mb-5 ml2 tmvalue impact-info95 padLR bdrbox">
+                                    <div class="col-sm-12 mb-10 padL-0" ng-repeat="Item in AllDataSourcesRelatedData track by $index">
+                                        <div class="col-sm-5">
+                                            <label class="full_width">Name</label>
+                                            <select class="form-control" id="Name{{$index}}" ng-model="Item.Name" ng-disabled="Item.Disabled">
+                                                <option value="">Select Data Sources</option>
+                                                <option ng-repeat="item in RelatedToDataSources | filter:Item.Site" value="{{item.Title}}">
+                                                    {{item.Title}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <label class="full_width">Site</label>
+                                            <select class="form-control" id="Site{{$index}}" ng-model="Item.Site" ng-change="changeData(Item.Site,$index,Item)">
+                                                <option value="">Select Sites</option>
+                                                <option ng-repeat="item in RelatedToSites|filter:{TaxType:'Site'}:true" value="{{item.Title}}">
+                                                    {{item.Title}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1" style="margin-top:20px">
+                                            <a ng-show="$index==(AllDataSourcesRelatedData.length)-1" class="hreflink" ng-click="addNewDataSourcesFields()">
+                                                <img class="icon-sites-img" ng-src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/Shareweb/Add-New.png">
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-1" style="margin-top:20px">
+                                            <a ng-hide="$index==0" class="hreflink" ng-click="removeNewDataSourcesFields($index)">
+                                                <img class="" ng-src="/_layouts/images/delete.gif" src="/_layouts/images/delete.gif">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-3 padL-0 PadR0">
+
+                                <div ng-show="MainWebpartId!=''" class="col-sm-12 padL-0" style="margin-top: -7px;">
+                                    <Comments-Mail siteType="'SPComponents'" textid="'createwebpartarchitecturetxtid'" editid="'createwebpartarchitectureid'"
+                                                   autoid="'createwebpartarchitecture'" id="MainWebpartId" webpartid="'CommentMailComponent'"></Comments-Mail>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-2 padL-0 PadR0">
+                                <div class="col-sm-12 padL-0">
+                                    <fieldset>
+                                        <label>Status</label>
+                                        <input type="text" class="form-control" placeholder="% Complete" ng-model="PercentComplete" ng-change="getpercentnumber()" />
+                                        <div class="radio mt-5 mb-5">
+                                            <label>
+                                                <input class="form-check-input" name="radioCompleted" type="radio"
+                                                       value="Acknowledged" ng-click="PercentCompleted()"
+                                                       ng-model="Completed"> 05%
+                                                Acknowledged
+                                            </label>
+                                        </div>
+                                        <div class="radio mt-5 mb-5">
+                                            <label>
+                                                <input class="form-check-input" name="radioCompleted" type="radio"
+                                                       value="working on it" ng-click="PercentCompleted()"
+                                                       ng-model="Completed"> 10%
+                                                working on it
+                                            </label>
+                                        </div>
+                                        <div class="radio mt-5 mb-5">
+                                            <label>
+                                                <input class="form-check-input" name="radioCompleted" type="radio"
+                                                       value="In QA review" ng-click="PercentCompleted()"
+                                                       ng-model="Completed"> 80% In
+                                                QA Review
+                                            </label>
+                                        </div>
+                                        <div class="radio mt-5 mb-5">
+                                            <label>
+                                                <input class="form-check-input" name="radioCompleted" type="radio"
+                                                       value="Task completed" ng-click="PercentCompleted()"
+                                                       ng-model="Completed"> 90% Task
+                                                completed
+                                            </label>
+                                        </div>
+                                        <div class="radio mt-5 mb-5">
+                                            <label>
+                                                <input class="form-check-input" name="radioCompleted" type="radio"
+                                                       value="For Review" ng-click="PercentCompleted()"
+                                                       ng-model="Completed"> 93% For
+                                                Review
+                                            </label>
+                                        </div>
+                                        <div class="radio mt-5 mb-5">
+                                            <label>
+                                                <input class="form-check-input" name="radioCompleted" type="radio"
+                                                       value="For Follow-up later" ng-click="PercentCompleted()"
+                                                       ng-model="Completed"> 96%
+                                                Follow-up later
+                                            </label>
+                                        </div>
+                                        <div class="radio mt-5 mb-5">
+                                            <label>
+                                                <input class="form-check-input" name="radioCompleted" type="radio"
+                                                       value="Completed" ng-click="PercentCompleted()"
+                                                       ng-model="Completed"> 99% Completed
+                                            </label>
+                                        </div>
+                                        <div class="radio mt-5 mb-5">
+                                            <label>
+                                                <input ng-disabled="userId != 14" class="form-check-input"
+                                                       name="radioCompleted" type="radio" value="Closed"
+                                                       ng-click="PercentCompleted()" ng-model="Completed"> 100%
+                                                Closed
+                                            </label>
+                                        </div>
+                                    </fieldset>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-3 padL-0">
+                                <div class="col-sm-12 mb-10 Doc-align padL-0">
+                                    <div class="col-sm-11 PadR0 Doc-align">
+                                        <label>
+                                            Features
+                                        </label>
+                                        <input type="text" class="form-control ui-autocomplete-input" id="txtFeaturesAvailable" ng-model="SearchFeaturesAvailable" autocomplete="off"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                                    </div>
+                                    <div class="col-sm-1 no-padding">
+                                        <label class="full_width">&nbsp;</label>
+                                        <img ng-src="/sites/HHHHTeams/SiteCollectionImages/ICONS/32/edititem.gif" ng-click="openBaseTemplatePopup('Features')">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-12 PadR0">
+                                                <div class="block" ng-repeat="item in smartFeaturesAvailable track by $index">
+                                                    <a class="hreflink" target="_blank" ng-href="{{Baseurl}}/SitePages/Portfolio-Profile.aspx?taskId={{item.Id}}"> {{item.Title}}</a>
+                                                    <a class="hreflink" ng-click="smartFeaturesAvailable.splice($index,1)">
+                                                        <img ng-src="/_layouts/images/delete.gif">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mt-10 padL-0">
+                        <div class="col-sm-5 padL-0 padR0">
+                            <div class="col-sm-12 padL-0 PadR0">
+                                <div class="col-sm-12 padL-0 PadR0">
+                                    <div class="col-sm-12 padL-0 DashboardTaskPopup-Editor above">
+                                        <div class="" ng-if="attachments.length > 0"
+                                             ng-repeat="attachedFiles in attachments">
+                                            <div class="mt-5" style="width: 285px;"
+                                                 id="sit-sharewebImagePopup-demo"
+                                                 ng-show="attachedFiles.FileName.toLowerCase().indexOf('.png'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.jpg'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.bmp'.toLowerCase())> -1">
+                                                {{attachedFiles.newFileName}}
+                                                <a style="cursor:pointer;" title="Delete"
+                                                   data-toggle="modal"
+                                                   ng-click="deleteFile(attachedFiles)">
+                                                    <img ng-src="/_layouts/images/delete.gif">
+                                                </a>
+                                                <a class="sit-preview" target="_blank"
+                                                   href="{{CurrentSiteUrl}}/Lists/{{site}}/Attachments/{{attachedItemId}}/{{attachedFiles.FileName}}">
+                                                    <img style="min-width: 500px !important;;"
+                                                         ng-if="deleteAttachedFile = true"
+                                                         alt="{{attachedFiles.FileName}}"
+                                                         ng-src="{{CurrentSiteUrl}}/Lists/{{site}}/Attachments/{{attachedItemId}}/{{attachedFiles.FileName}}?updated="
+                                                         {{param}}
+                                                         data-preview-url="{{CurrentSiteUrl}}/Lists/{{site}}/Attachments/{{attachedItemId}}/{{attachedFiles.FileName}}">
+                                                </a>
+                                            </div>
+                                            <div class="mt-2 font11" style="text-align:end"
+                                                 ng-show="attachedFiles.FileName==imageInfo.ImageName"
+                                                 ng-repeat="imageInfo in BasicImageInfo">
+                                                <span>{{imageInfo.UploadeDate}}</span> By
+                                                <span>{{imageInfo.UserName}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <shareweb-progress-bar progressBarId="CopyPastuploadImage"></shareweb-progress-bar>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="col-sm-6">
+                                    <div ng-if="attachments.length > 0"
+                                         ng-repeat="attachedFiles in attachments">
+                                        <div ng-show="ImageName != attachedFiles.FileName">
+                                            <div ng-if="attachedFiles.FileName.toLowerCase().indexOf('.txt'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.docx'.toLowerCase())> -1  || attachedFiles.FileName.toLowerCase().indexOf('.pdf'.toLowerCase())> -1  || attachedFiles.FileName.toLowerCase().indexOf('.doc'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.msg'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.pptx'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.xls'.toLowerCase())> -1 || attachedFiles.FileName.toLowerCase().indexOf('.xlsx'.toLowerCase())> -1">
+                                                <a ng-href="{{CurrentSiteUrl}}/Lists/{{Item.siteType}}/Attachments/{{attachedItemId}}/{{attachedFiles.FileName}}?web=1">{{attachedFiles.FileName}}</a>
+                                                <a style="cursor:pointer;" title="Delete" data-toggle="modal"
+                                                   ng-click="deleteFile(attachedFiles)">
+                                                    <img ng-src="/_layouts/images/delete.gif">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="Doc-align padding-0">
+                                <div class="col-sm-5 padding-0 mt-10" style="margin-bottom: -20px;">
+                                    <a style="cursor:pointer;" ng-click="addCopyPasteEditor()">Add new image</a>
+                                </div>
+                                <div ng-repeat="editor in copyPasteEditorAdminIDS" ng-show="copyPasteEditorAdminIDS.length!=0">
+                                    <label class="full_width" ng-bind-html="GetColumnDetails('copyandpastImage') | trustedHTML">
+                                        Copy & Paste
+                                        Image
+                                    </label>
+                                    <div id={{editor.copyPasteEditorAdminID}}></div>
+                                    <span>
+                                        <a ng-show="copyPasteEditorAdminIDS.length>0" style="cursor:pointer;"
+                                           title="Delete" data-toggle="modal"
+                                           ng-click="removeAddCopyPasteEditor(copyPasteEditorAdminIDS,$inde)">
+                                            <img ng-src="/_layouts/images/delete.gif" src="/_layouts/images/delete.gif">
+                                        </a>
+                                    </span>
+                                </div>
+                                <div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-7 padL-0 " style="margin-top:2px;">
+                            <label>Description</label>
+                            <div class="col-sm-12 mb-5"></div>
+                            <div class="col-sm-12 padding-0">
+
+                                <div class="forFullScreenButton" id="DescriptionBodyForArchitecture" ng-model="Body"></div>
+                            </div>
+                        </div>
+
+                        <shareweb-progress-bar progressBarId="'CopyPasteuploadImage'"></shareweb-progress-bar>
+                        <div class="clearfix"></div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="SaveAllData()" style="margin-top:15px">Save</button>
+                    </div>
+                </div>
+            </div>
+            <div id="BaseTemplatepopup" class="modal fade in FeedBackIconSize" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+                <div class="modal-dialog modal-help">
+                    <div class="panel panel-default">
+                        <div class="panel-title">
+
+                            <button type="button" class="close " data-dismiss="modal" ng-click="cancelBaseTemplatePopup()" style="min-width: 10px; margin-top: 3px;">
+                                &times;
+                            </button>
+                            <h3>
+
+                                Select {{PopupTitle}}
+
+                                <span class="pull-right ">
+                                    <page-settings-info webpartid=""></page-settings-info>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="modal-body ">
+                            <div class="col-sm-12 fortablee tab-content bdrbox">
+                                <div class="section-event pt-0 mt-5 mb-5">
+                                    <ul class="table">
+                                        <li class="for-lis">
+                                            <div style="width: 1%;">
+                                                <div style="width:85%;">
+                                                    <!--<a class="hreflink" ng-show="expand_collapse" ng-click="filterExpanded(ComponetsData['allComponentItemWithStructure'])" title="Tap to expand the childs">
+
+                                                    </a>
+                                                    <a class="hreflink" ng-show="!expand_collapse" ng-click="filterCollapsed(ComponetsData['allComponentItemWithStructure'])" title="Tap to Shrink the childs">
+
+                                                    </a>-->
+                                                </div>
+                                            </div>
+                                            <div style="width: 2%;">
+                                                <div style="width: 80%; ">
+                                                </div>
+                                            </div>
+                                            <div style="width: 6%;">
+                                                <div style="width: 80%; ">
+                                                </div>
+                                            </div>
+
+                                            <div style="width:50%;">
+                                                <div style="width:95%;" class="headcontainer">
+                                                    <input type="search" placeholder="Title" class="searchbox_height width-90" ng-model="SearchComponent.Title">
+                                                    <span ng-show="SearchComponent.Title.length>0" class="searchclear" ng-click="clearSearchBox('SearchComponent','Title')">X</span>
+                                                    <span class="{{orderBy.orderComponent=='Title'&&!reverse.orderComponent?'glyphicon_active':'glyphicon'}}  glyphicon-chevron-up direction-arrow arrow_up" ng-click="sortBy('orderComponent','Title', false)"></span>
+                                                    <span class="{{orderBy.orderComponent=='Title'&&reverse.orderComponent?'glyphicon_active':'glyphicon'}}  glyphicon-chevron-down direction-arrow arrow_down" ng-click="sortBy('orderComponent','Title', true)"></span>
+                                                </div>
+                                            </div>
+
+                                        </li>
+                                        <div class="wrapper container-new" id="portfolio1">
+                                            <li ng-show="item.flag==true"
+                                                class="for-lis bold {{item.expanded?'project_active tdrows':'tdrows'}} serviceColor_Active"
+                                                ng-repeat-start="item in filterComponent=(AllStructuredData | orderBy:orderBy['orderComponent']:reverse['orderComponent'])"
+                                                lvl-drop-target="true" on-drop="dropped(dragSrc,item)">
+                                                <div style="width:1%;" class="">
+                                                    <a class="hreflink" ng-show="item.childs.length>0&&!item.expanded"
+                                                       ng-click="item.expanded=true" title="Expand {{item.newTitle}} childs">
+                                                        <img src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/right-list-icon.png">
+
+                                                    </a>
+                                                    <a class="hreflink" ng-show="item.childs.length>0&&item.expanded"
+                                                       ng-click="item.expanded=false" title="Collapse {{item.newTitle}} childs">
+                                                        <img src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/list-icon.png">
+
+                                                    </a>
+                                                </div>
+                                                <div style="width:2%;" class="padLR mt-3">
+                                                    <div ng-show="PopupTitle == 'Base Template'">
+                                                        <input type="radio" name="PortfoliosItems" ng-click="setCompareComponents(item,true);"
+                                                               ng-checked="item.select">
+                                                    </div>
+                                                    <div ng-show="PopupTitle == 'Features'">
+                                                        <input type="checkbox" ng-click="setCompareComponents(item,item.select);"
+                                                               ng-model="item.select">
+                                                    </div>
+                                                </div>
+                                                <div style="width:6%;" class="padLR">
+                                                    <span>
+                                                        <img ng-if="item.Item_x0020_Type =='Component'" class="icon-sites-img ml-8"
+                                                             ng-src="{{mainsiteurl}}/SiteCollectionImages/ICONS/Shareweb/component_icon.png">
+                                                        <img ng-if="item.Item_x0020_Type =='SubComponent'" class="icon-sites-img ml-8"
+                                                             ng-src="{{mainsiteurl}}/SiteCollectionImages/ICONS/Shareweb/SubComponent_icon.png">
+                                                        <img ng-if="item.Item_x0020_Type =='Feature'" class="icon-sites-img ml-8"
+                                                             ng-src="{{mainsiteurl}}/SiteCollectionImages/ICONS/Shareweb/feature_icon.png">
+                                                    </span>
+                                                </div>
+
+                                                <div style="width:50%;" class="padLR">
+                                                    <span>
+                                                        <a class="hreflink serviceColor_Active" target="_blank"
+                                                           ng-href="{{Baseurl}}/SitePages/Portfolio-Profile.aspx?taskId={{child.Id}}"
+                                                           ng-bind-html="item.Title | trustedHTML">
+                                                        </a>
+
+                                                    </span>
+                                                </div>
+
+
+                                            </li>
+                                            <li ng-if="item.expanded" class="active" ng-repeat-end>
+                                                <ul>
+                                                    <li ng-show="item.childs.length >0 && child.flag ==true"
+                                                        ng-repeat-start="child in filterComponent=(item.childs)" lvl-drop-target="true"
+                                                        on-drop="dropped(dragSrc,child)"
+                                                        class="for-c0l for-lis {{child.expanded?'project_actives tdrows':'tdrows'}} serviceColor_Active">
+                                                        <div style="width:1%;" class="">
+                                                            <a class="hreflink" ng-show="child.childs.length>0&&!child.expanded"
+                                                               ng-click="child.expanded=true" title="Expand {{child.newTitle}} childs">
+                                                                <img src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/right-list-icon.png">
+                                                            </a>
+                                                            <a class="hreflink" ng-show="child.childs.length>0&&child.expanded"
+                                                               ng-click="child.expanded=false" title="Collapse {{child.newTitle}} childs">
+                                                                <img src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/list-icon.png">
+
+                                                            </a>
+                                                        </div>
+                                                        <div style="width:2%;" class="padLR mt-3">
+                                                            <div ng-show="PopupTitle == 'Base Template'">
+                                                                <input type="radio" name="PortfoliosItems" ng-click="setCompareComponents(child,true);"
+                                                                       ng-checked="child.select">
+                                                            </div>
+                                                            <div ng-show="PopupTitle == 'Features'">
+                                                                <input type="checkbox" ng-click="setCompareComponents(child,child.select);"
+                                                                       ng-model="child.select">
+                                                            </div>
+                                                        </div>
+                                                        <div style="width:6%;" class="padLR">
+                                                            <span>
+                                                                <img ng-if="child.Item_x0020_Type =='Component'" class="icon-sites-img ml5"
+                                                                     ng-src="{{mainsiteurl}}/SiteCollectionImages/ICONS/Shareweb/component_icon.png">
+                                                                <img ng-if="child.Item_x0020_Type =='SubComponent'"
+                                                                     class="icon-sites-img ml5"
+                                                                     ng-src="{{mainsiteurl}}/SiteCollectionImages/ICONS/Shareweb/SubComponent_icon.png">
+                                                                <img ng-if="child.Item_x0020_Type =='Feature'" class="icon-sites-img ml5"
+                                                                     ng-src="{{mainsiteurl}}/SiteCollectionImages/ICONS/Shareweb/feature_icon.png">
+
+
+                                                            </span>
+                                                        </div>
+
+                                                        <div style="width:50%;" class="padLR">
+                                                            <span class="">
+                                                                <a class="hreflink serviceColor_Active" target="_blank"
+                                                                   ng-href="{{Baseurl}}/SitePages/Portfolio-Profile.aspx?taskId={{child.Id}}"
+                                                                   ng-bind-html="child.Title | trustedHTML">
+                                                                </a>
+
+                                                            </span>
+
+                                                        </div>
+
+
+                                                    </li>
+                                                    <li ng-show="child.expanded " class="active" ng-repeat-end>
+                                                        <ul>
+                                                            <li ng-show="subchild.flag==true" ng-repeat="subchild in filterComponent=(child.childs)"
+                                                                lvl-drop-target="true" on-drop="dropped(dragSrc,subchild)"
+                                                                class="for-lis for-c02 {{subchild.expanded?'project_activess tdrows':'tdrows'}} serviceColor_Active">
+                                                                <div style="width:1%;" class="">
+                                                                    <a class="hreflink"
+                                                                       ng-show="subchild.childs.length>0&&!subchild.expanded"
+                                                                       ng-click="subchild.expanded=true"
+                                                                       title="Expand {{subchild.newTitle}} childs">
+                                                                        <img src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/right-list-icon.png">
+
+                                                                    </a>
+                                                                    <a class="hreflink"
+                                                                       ng-show="subchild.childs.length>0&&subchild.expanded"
+                                                                       ng-click="subchild.expanded=false"
+                                                                       title="Collapse {{subchild.newTitle}} childs">
+                                                                        <img src="https://hhhhteams.sharepoint.com/sites/HHHHTeams/SiteCollectionImages/ICONS/24/list-icon.png">
+
+                                                                    </a>
+                                                                </div>
+                                                                <div style="width:2%;" class="padLR mt-3">
+                                                                    <div ng-show="PopupTitle == 'Base Template'">
+                                                                        <input type="radio" name="PortfoliosItems"
+                                                                               ng-click="setCompareComponents(subchild,true);"
+                                                                               ng-checked="subchild.select">
+                                                                    </div>
+                                                                    <div ng-show="PopupTitle == 'Features'">
+                                                                        <input type="checkbox" ng-click="setCompareComponents(subchild,subchild.select);"
+                                                                               ng-model="subchild.select">
+                                                                    </div>
+                                                                </div>
+                                                                <div style="width:6%;" class="padLR">
+                                                                    <span>
+                                                                        <img ng-if="subchild.Item_x0020_Type =='Component'"
+                                                                             class="icon-sites-img ml20"
+                                                                             ng-src="{{mainsiteurl}}/SiteCollectionImages/ICONS/Shareweb/component_icon.png">
+                                                                        <img ng-if="subchild.Item_x0020_Type =='SubComponent'"
+                                                                             class="icon-sites-img ml20"
+                                                                             ng-src="{{mainsiteurl}}/SiteCollectionImages/ICONS/Shareweb/SubComponent_icon.png">
+                                                                        <img ng-if="subchild.Item_x0020_Type =='Feature'"
+                                                                             class="icon-sites-img ml20"
+                                                                             ng-src="{{mainsiteurl}}/SiteCollectionImages/ICONS/Shareweb/feature_icon.png">
+                                                                    </span>
+
+                                                                </div>
+
+                                                                <div style="width:50%;" class="padLR">
+                                                                    <span class="serviceColor_Active">
+                                                                        <a class="hreflink" target="_blank"
+                                                                           ng-href="{{Baseurl}}/SitePages/Portfolio-Profile.aspx?taskId={{subchild.Id}}"
+                                                                           ng-bind-html="subchild.Title | trustedHTML">
+                                                                        </a>
+
+                                                                    </span>
+
+                                                                </div>
+
+
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+
+                                                </ul>
+
+                                            </li>
+
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary mt-10" ng-click="AddBaseTemplate()">OK</button>
+                            <button type="button" class="mt-10" ng-click="cancelBaseTemplatePopup()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
